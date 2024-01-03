@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block start %}
+<nav class="navbar navbar-expand-lg bg-body-dark">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <a class="navbar-brand" href="/recipe">{{request.user|title}}</a>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/recipe">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"href="/recipe">Favorites</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-danger" href="/logout" >Logout</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search" method="get">
+        <input class="form-control me-2" name ="search" type="search" placeholder="Recipe name..." aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+<div class="container mt-5 bg-secondary bg-gradient bg-opacity-50 card">
+    <div class="fs-2 fw-5 text-center container">
+      Welcome, <span class="fs-1 text-primary">
+        {{request.user|title}}
+      </span>
+    </div>
+    <!-- <form method="get" class="">
+      <div class="input-group mb-3">
+        <input required name="search" type="text" class="form-control" placeholder="Recipe name" aria-label="Search recipe" aria-describedby="button-addon2">
+        <button class="btn btn-outline-secondary" type="submit" id="button-addon2" aria-describedby="Seearch button">Search</button>
+      </div>
+    </form> -->
+    <form class="row mt-3 g-3 card p-3 shadow-lg" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <p class="fs-1">Add New Recipe</p>
+      <p class="fs-10">Fields marked (<span class="text-danger">*</span>) are required.</p>
+        <div class="col-12">
+          <label for="inputRecipeName" class="form-label">Recipe name<span class="text-danger">*</span></label>
+          <input required type="text" class="form-control" id="inputRecipeName" name="recipeName">
+        </div>
+        <div class="col-12">
+          <label  for="inputDescription" class="form-label col-12">Description<span class="text-danger">*</span></label>
+          <!-- <input type="description" class="form-control" id="inputDescription4"> -->
+          <textarea required class="col-12 form-control p-1" name="description" id="inputDescription" rows="5">
+
+          </textarea>
+        </div>
+        <div class="col-12">
+          <label for="inputFile" class="form-label">Recipe Image<span class="text-danger">*</span></label>
+          <input required type="file" class="form-control" id="inputFile" placeholder="Choose..." multiple name="inputFile">
+        </div>
+        <div class="col-12">
+          <label for="inputCookingDate" class="form-label">Likely cooking date</label>
+          <input type="date" class="form-control" id="inputCookingDate" placeholder="DD/MM/YYY00:00:00" name="cookingDate">
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary col-12">Continue</button>
+        </div>
+      </form>
+      <table class="table table-striped my-4 border"> 
+        <thead>
+            <tr>
+                <th scope="col">S. No</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Image</th>
+                <th scope="col">Cooking Date</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        {% for recipe in recipes %}
+        <tbody>
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{recipe.name}}</td>
+                <td>{{recipe.description|truncatechars:100}}</td>
+                <td>
+                  <img src="/media/{{recipe.images}}" class="rounded float-start img-fluid" alt="Recipe image">
+                </td>
+                <td>{{recipe.cookingDate}}</td>
+                <td>
+                  <a href="/update-recipe/{{recipe.id}}" class="btn btn-primary mb-2" aria-current="time">Update</a>
+                  <a href="/delete-recipe/{{recipe.id}}" class="btn btn-danger" aria-current="time">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+{% endblock %}

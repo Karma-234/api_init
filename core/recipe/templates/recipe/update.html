@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block start %}
+<div class="container mt-5">
+    <form class="row g-3 card p-3 shadow-lg" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <p class="fs-1 text-center">Update Recipe</p>
+      <p class="fs-10">Fields marked (<span class="text-danger">*</span>) are required.</p>
+        <div class="col-12">
+          <label for="inputEmail4" class="form-label">Recipe name<span class="text-danger">*</span></label>
+          <input required value="{{name}}" type="text" class="form-control" id="inputRecipeName" name="recipeName">
+        </div>
+        <div class="col-12">
+          <label  for="inputPassword4" class="form-label col-12">Description<span class="text-danger">*</span></label>
+          <!-- <input type="description" class="form-control" id="inputDescription4"> -->
+          <textarea required class="col-12 form-control" name="description" id="inputDescription" rows="5">
+            {{description}}
+          </textarea>
+        </div>
+        <div class="col-12">
+            <img src="/media/{{image}}" class="rounded col-3 float-start img-fluid" alt="Recipe image">
+        </div>
+        <div class="col-12">
+          <label for="imputImage" class="form-label">Recipe Image<span class="text-danger">*</span></label>
+          <input type="file" class="form-control" id="inputFile" placeholder="Choose..."  name="inputFile">
+        </div>
+        <div class="col-12">
+          <label for="inputAddress2" class="form-label">Likely cooking date</label>
+          <input value="{{cookingDate}}" type="date" class="form-control" id="inputCookingDate" placeholder="DD/MM/YYY00:00:00" name="cookingDate">
+        </div>
+        <div class="col-12">
+          <button  type="submit" class="btn btn-success col-12">Update</button>
+        </div>
+      </form>
+
+</div>
+{% endblock %}

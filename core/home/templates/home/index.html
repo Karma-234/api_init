@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block start %}
+    <h2 class="subheading">This is the Home page</h2>
+    <a href="/about/">
+        About
+    </a>
+    <a href="/contact/">
+        Contact
+    </a>
+
+    <div class="container px-0 ms-2">
+        <table class="table table-striped my-4 border"> 
+            <thead>
+                <tr>
+                    <th scope="col">S. No</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Can Vote</th>
+                </tr>
+            </thead>
+            {% for people in peoples %}
+            <tbody>
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>>{{people.name}}</td>
+                    <td>>{{people.age}}</td>
+                    <td>
+                        {% if people.age > 30 %}
+                            True
+                        {% else %}
+                            False
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+    
+        </table>
+    </div>
+{% endblock %}
