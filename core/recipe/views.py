@@ -3,11 +3,13 @@ from django.http import HttpRequest
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 from .models import *
 
 
+@login_required(login_url="/login/")
 def recipe(request: HttpRequest):
 
     if request.method == "POST":
@@ -35,6 +37,10 @@ def delete_recipe(request: HttpRequest, id):
     querySet = UserRecipe.objects.get(id=id)
     querySet.delete()
     print(request.method)
+    return redirect("/recipe/")
+
+
+def favorites(request: HttpRequest, userId: str):
     return redirect("/recipe/")
 
 
