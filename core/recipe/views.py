@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 # Create your views here.
 from .models import *
@@ -28,7 +29,13 @@ def recipe(request: HttpRequest):
     context = {'recipes': querySet}
     if request.GET.get('search'):
         print(request.GET.get('search'))
-        querySet = querySet.filter(name__icontains=request.GET.get('search'))
+        querySet = querySet.filter(
+            Q(name__icontains=request.GET.get('search')) | Q(description__icontains=request.GET.get('search'),),)
+        context = {'recipes': querySet}
+    if request.GET.get('page'):
+        paginator = Paginator(querySet, 3)
+        page_number = request.GET.get('page')
+        querySet = paginator.get_page(page_number)
         context = {'recipes': querySet}
 
     return render(request=request, template_name='recipe/index.html', context=context)
@@ -67,6 +74,16 @@ def update_recipe(request: HttpRequest, id):
     context = {'id': id, 'name': querySet.name,
                'description': querySet.description, 'image': querySet.images}
     return render(request=request, template_name='recipe/update.html', context=context)
+
+
+@login_required(login_url="/login/")
+def recipe_pagination(request: HttpRequest):
+    querySet = UserRecipe.objects.all()
+    paginator = Paginator(querySet, 3)
+    page_number = request.GET.get('page', 1)
+    querySet = paginator.get_page(page_number)
+    context = {'recipes': querySet}
+    return render(request=request, template_name='recipe/index.html', context=context)
 
 
 def login_user(request):

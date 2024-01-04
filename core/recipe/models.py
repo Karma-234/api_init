@@ -16,13 +16,12 @@ class UserRecipe(models.Model):
         return self.name
 
 
-class Favorite (models.Model):
+class Favorites (models.Model):
     user = models.ForeignKey(
-        User, on_delete=models.SET_NULL, null=True, unique=False)
-    name = models.CharField(max_length=254)
-    description = models.TextField()
-    image = models.ForeignKey(
-        UserRecipe, on_delete=models.CASCADE, related_name='image',)
+        User, on_delete=models.SET_NULL, null=True)
+    favoriteRecipe = models.ForeignKey(
+        UserRecipe, on_delete=models.SET_NULL, related_name='recipe', null=True)
+    dateAdded = models.DateTimeField(auto_created=True)
 
 
 class OtherUser(models.Model):
