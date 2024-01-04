@@ -13,15 +13,18 @@ class UserRecipe(models.Model):
     cookingDate = models.DateTimeField(null=True, blank=True)
 
     def __str__(self) -> str:
-        return self.name
+        return f'{self.name} {self.description}'
 
 
 class Favorites (models.Model):
     user = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True)
     favoriteRecipe = models.ForeignKey(
-        UserRecipe, on_delete=models.SET_NULL, related_name='recipe', null=True)
-    dateAdded = models.DateTimeField(auto_created=True)
+        UserRecipe, on_delete=models.SET_NULL, null=True)
+    dateAdded = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ["user", "favoriteRecipe", "dateAdded"]
 
 
 class OtherUser(models.Model):
@@ -34,4 +37,4 @@ class OtherUser(models.Model):
     age = models.IntegerField(null=True, blank=True, default=18)
 
     def __str__(self) -> str:
-        return self.name
+        return f'{self.name} {self.email}'

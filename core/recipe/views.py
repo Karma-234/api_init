@@ -23,6 +23,7 @@ def recipe(request: HttpRequest):
         cookingDate = data.get('cookingDate')
         print(data)
         UserRecipe.objects.create(
+            user=request.user,
             name=name, description=descriprion, cookingDate=cookingDate, images=files[0])
         return redirect('/recipe/')
     querySet = UserRecipe.objects.all()
@@ -51,7 +52,10 @@ def delete_recipe(request: HttpRequest, id):
 
 @login_required(login_url="/login/")
 def favorites(request: HttpRequest, userId: str):
-    return redirect("/recipe/")
+    if request.method == "GET":
+        return render(request=request, template_name='recipe/index.html', context=context)
+    print(request.user)
+    return render(request=request, template_name='recipe/favorites.html', context=context)
 
 
 @login_required(login_url="/login/")
