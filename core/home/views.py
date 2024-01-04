@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpRequest
-from .utils import send_email_to_user
-
-import ssl
+from .utils import send_email_to_user, send_email_with_attachment
+from django.conf import settings
 
 
 # Create your views here.
@@ -48,5 +47,7 @@ def success_page(request: HttpRequest):
 
 
 def send_mail_route(request):
-    send_email_to_user()
+    # send_email_to_user()
+    file_path = f"{settings.BASE_DIR}/chicken.webp"
+    send_email_with_attachment(file_path=file_path)
     return redirect("/")
