@@ -51,10 +51,17 @@ def delete_recipe(request: HttpRequest, id):
 
 
 @login_required(login_url="/login/")
-def favorites(request: HttpRequest, userId: str):
-    if request.method == "GET":
-        return render(request=request, template_name='recipe/index.html', context=context)
-    print(request.user)
+def add_favorites(request: HttpRequest, id: str):
+    querySet = UserRecipe.objects.get(id=id)
+    Favorites.objects.create(user=request.user, favoriteRecipe=querySet,)
+    return redirect('/favorites/')
+
+
+@login_required(login_url="/login/")
+def favorites(request: HttpRequest):
+    querySet = Favorites.objects.all().filter(user=request.user)
+    context = {'recipes': querySet}
+    print(context['recipes'])
     return render(request=request, template_name='recipe/favorites.html', context=context)
 
 

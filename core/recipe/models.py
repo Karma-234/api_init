@@ -23,8 +23,11 @@ class Favorites (models.Model):
         UserRecipe, on_delete=models.SET_NULL, null=True)
     dateAdded = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self) -> str:
+        return f'{self.user.username} {self.favoriteRecipe.name}'
+
     class Meta:
-        unique_together = ["user", "favoriteRecipe", "dateAdded"]
+        unique_together = ["user", "favoriteRecipe"]
 
 
 class OtherUser(models.Model):

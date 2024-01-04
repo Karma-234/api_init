@@ -12,7 +12,7 @@
           <a class="nav-link active" aria-current="page" href="/recipe">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link"href="/recipe">Favorites</a>
+          <a class="nav-link"href="/favorites">Favorites</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-danger" href="/logout" >Logout</a>
@@ -87,7 +87,8 @@
                 <td>{{recipe.cookingDate}}</td>
                 <td>
                   <a href="/update-recipe/{{recipe.id}}" class="btn btn-primary mb-2" aria-current="time">Update</a>
-                  <a href="/delete-recipe/{{recipe.id}}" class="btn btn-danger" aria-current="time">Delete</a>
+                  <a href="/favorite/{{recipe.id}}" class="btn btn-primary mb-2" aria-current="time">Favorite</a>
+                  <a type="post" href="/delete-recipe/{{recipe.id}}" class="btn btn-danger" aria-current="time">Delete</a>
                 </td>
             </tr>
             {% endfor %}

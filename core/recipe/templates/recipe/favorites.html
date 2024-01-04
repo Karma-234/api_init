@@ -26,17 +26,6 @@
   </div>
 </nav>
 <div class="container mt-5 bg-secondary bg-gradient bg-opacity-50 card">
-    <div class="fs-2 fw-5 text-center container">
-      Welcome, <span class="fs-1 text-primary">
-        {{request.user|title}}
-      </span>
-    </div>
-    <!-- <form method="get" class="">
-      <div class="input-group mb-3">
-        <input required name="search" type="text" class="form-control" placeholder="Recipe name" aria-label="Search recipe" aria-describedby="button-addon2">
-        <button class="btn btn-outline-secondary" type="submit" id="button-addon2" aria-describedby="Seearch button">Search</button>
-      </div>
-    </form> -->
       <table class="table table-striped my-4 border"> 
         <thead>
             <tr>
@@ -44,7 +33,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Image</th>
-                <th scope="col">Cooking Date</th>
+                
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -52,15 +41,14 @@
         <tbody>
             <tr>
                 <td>{{forloop.counter}}</td>
-                <td>{{recipe.name}}</td>
-                <td>{{recipe.description|truncatechars:100}}</td>
+                <td>{{recipe.user.username}}</td>
+                <td>{{recipe.favoriteRecipe.description|truncatechars:100}}</td>
                 <td>
-                  <img src="/media/{{recipe.images}}" class="rounded float-start img-fluid" alt="Recipe image">
+                  <img src="/media/{{recipe.favoriteRecipe.images}}" class="rounded float-start img-fluid" alt="Recipe image">
                 </td>
-                <td>{{recipe.cookingDate}}</td>
+                
                 <td>
-                  <a href="/update-recipe/{{recipe.id}}" class="btn btn-primary mb-2" aria-current="time">Update</a>
-                  <a href="/delete-recipe/{{recipe.id}}" class="btn btn-danger" aria-current="time">Delete</a>
+                  <a href="/delete-recipe/{{recipe.id}}" class="btn btn-danger" aria-current="time">Remove</a>
                 </td>
             </tr>
             {% endfor %}
