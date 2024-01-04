@@ -64,11 +64,25 @@
           <button type="submit" class="btn btn-primary col-12">Continue</button>
         </div>
       </form>
-      <table class="table table-striped my-4 border"> 
+      {% if messages %}
+      {{message.tags}}
+        <div class="container my-4 bg-white rounded">
+          <ul class="my-4">
+            {% for message in messages %}
+                <div class="alert alert-info" role="alert">
+                    {{message}}
+                </div>
+            {% endfor %}
+        </ul>
+        <a href="/recipe/" class="text-end text-green"><p class="text-end text-green">Ok</p></a>
+        </div>
+      {% endif %}
+      <table class="table table-striped mb-4 border"> 
         <thead>
             <tr>
                 <th scope="col">S. No</th>
-                <th scope="col">Name</th>
+                <th scope="col">Posted by</th>
+                <th scope="col">Recipe Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Image</th>
                 <th scope="col">Cooking Date</th>
@@ -79,6 +93,7 @@
         <tbody>
             <tr>
                 <td>{{forloop.counter}}</td>
+                <td>{{recipe.user.username}}</td>
                 <td>{{recipe.name}}</td>
                 <td>{{recipe.description|truncatechars:100}}</td>
                 <td>

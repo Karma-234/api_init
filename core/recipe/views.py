@@ -45,8 +45,11 @@ def recipe(request: HttpRequest):
 @login_required(login_url="/login/")
 def delete_recipe(request: HttpRequest, id):
     querySet = UserRecipe.objects.get(id=id)
-    querySet.delete()
-    print(request.method)
+    if querySet.user == request.user:
+        querySet.delete()
+        print(request.method)
+        return redirect("/recipe/")
+    messages.info(request, 'You cannot perform this action!')
     return redirect("/recipe/")
 
 
