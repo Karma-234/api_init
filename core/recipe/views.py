@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 # Create your views here.
 from .models import *
@@ -33,6 +34,7 @@ def recipe(request: HttpRequest):
     return render(request=request, template_name='recipe/index.html', context=context)
 
 
+@login_required(login_url="/login/")
 def delete_recipe(request: HttpRequest, id):
     querySet = UserRecipe.objects.get(id=id)
     querySet.delete()
@@ -40,10 +42,12 @@ def delete_recipe(request: HttpRequest, id):
     return redirect("/recipe/")
 
 
+@login_required(login_url="/login/")
 def favorites(request: HttpRequest, userId: str):
     return redirect("/recipe/")
 
 
+@login_required(login_url="/login/")
 def update_recipe(request: HttpRequest, id):
     querySet = UserRecipe.objects.get(id=id)
     if request.method == "POST":
