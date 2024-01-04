@@ -34,6 +34,7 @@ urlpatterns = [
     path('delete-recipe/<id>/', delete_recipe, name='delete_recipe'),
     path('update-recipe/<id>/', update_recipe, name='update_recipe'),
     path('contact/', contact, name='contact'),
+    path('send-email/', send_mail_route, name='send_email'),
     path('success/', success_page, name='success_page'),
     path('admin/', admin.site.urls),
 

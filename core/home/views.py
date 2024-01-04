@@ -1,5 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpRequest
+from .utils import send_email_to_user
+
+import ssl
+
 
 # Create your views here.
 
@@ -41,3 +45,9 @@ def success_page(request: HttpRequest):
                         <h1 style="text-align:center">Success page</h1>
                         </body>
                         """)
+
+
+def send_mail_route(request):
+    defi = ssl._create_default_https_context = ssl._create_unverified_context
+    send_email_to_user()
+    return redirect("/")
