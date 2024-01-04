@@ -48,6 +48,5 @@ def success_page(request: HttpRequest):
 
 
 def send_mail_route(request):
-    defi = ssl._create_default_https_context = ssl._create_unverified_context
     send_email_to_user()
     return redirect("/")
